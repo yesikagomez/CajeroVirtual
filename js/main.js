@@ -18,7 +18,7 @@ function actualizarSaldoEnPantalla() {
   document.getElementById("saldo-cuenta").innerHTML = "$ " + saldoEnCuenta;
 }
 
-const pagarServicios = () => {
+function pagarServicios () {
   let agua = 500;
   let telefono = 425;
   let luz = 215;
@@ -50,7 +50,7 @@ const pagarServicios = () => {
       alert("No hay opción valida");
       break;
   }
-};
+}
 
 function depositarServicio(tipoDeServicio, nombreServicio) {
   saldoEnCuenta -= tipoDeServicio;
@@ -97,18 +97,23 @@ function depositarDinero() {
 
 function cambiarLimiteDeExtraccion() {
   var nuevoLimite = parseInt(prompt("Ingrese su nuevo límite de extraccion"), 0);
-  if(nuevoLimite<saldoEnCuenta){
-    limiteExtraccion = nuevoLimite;
-    actualizarSaldoExtraccion(limiteExtraccion);
-    actualizarLimiteEnPantalla();
-    alert(
-      "Pum pum!! Se ha actualizado tu límite de extracción, nuevo valor " +
-        limiteExtraccion
-    );
+  if(nuevoLimite%100==0){
+    if(nuevoLimite<saldoEnCuenta){
+      limiteExtraccion = nuevoLimite;
+      actualizarSaldoExtraccion(limiteExtraccion);
+      actualizarLimiteEnPantalla();
+      alert(
+        "Pum pum!! Se ha actualizado tu límite de extracción, nuevo valor " +
+          limiteExtraccion
+      );
+    }
+    else {
+      alert("El limite de extracción no puede ser mayor que el saldo en cuenta")
+    }
   }
- else {
-   alert("El limite de extracción no puede ser mayor que el saldo en cuenta")
- }
+  else {
+    alert ("El limite de extracción debe ser multiplo de 100.")
+  }
 }
 
 function transferirDinero(){
