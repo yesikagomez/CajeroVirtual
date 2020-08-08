@@ -3,46 +3,20 @@ console.log("Hello my banking app");
 let nombreUsuario = "John Flórez";
 let saldoEnCuenta = 5000;
 let limiteExtraccion = 500;
-let claveCorrecta = 1234;
-//console.log("clave correcta " + typeof claveCorrecta);
-// SE DEFINE LA FUNCIÓN PARA INICIAR SESIÓN
-function iniciarSesion() {
-  var clave = parseInt(
-    prompt("Por favor ingrese su clave para iniciar sesión"),
-    0
-  );
-  //console.log(typeof clave);
-  // 1234 == "1234" -> true
-  // 1234 === "1234" -> false
-  if (clave === claveCorrecta) {
     alert("Bienvenido/a " + nombreUsuario + " a tu Home Banking");
-    document.body.style.display = "block";
     cargarNombreEnPantalla();
+    actualizarSaldoExtraccion(limiteExtraccion);
     actualizarSaldoEnPantalla();
     actualizarLimiteEnPantalla();
-  } else {
-    saldoEnCuenta = 0;
-    alert("Clave incorrecta. le quitamos toda su platica :(");
-  }
-}
 //Función para poder cargar el nombre en pantalla
 function cargarNombreEnPantalla() {
-  document.getElementById("nombre").innerHTML = "Hello hello " + nombreUsuario;
+  document.getElementById("nombre").innerHTML = "Hello " + nombreUsuario;
 }
 
 //actualizar saldo en pantalla
 function actualizarSaldoEnPantalla() {
   document.getElementById("saldo-cuenta").innerHTML = "$ " + saldoEnCuenta;
 }
-
-//función flecha limite en pantalla fuction --- =>
-const actualizarLimiteEnPantalla = () => {
-  document.getElementById("limite-extraccion").innerHTML =
-    "Tu límite de estraccion es: $ " + limiteExtraccion;
-};
-
-//INVOCAR LA FUNCIÓN INICIAR SESIÓN
-iniciarSesion();
 
 const pagarServicios = () => {
   let agua = 500;
@@ -88,10 +62,9 @@ function depositarServicio(tipoDeServicio, nombreServicio) {
 
 //evento para pagar servicios
 //listener sobre el elemento,
-document.getElementById("servicios").addEventListener("click", pagarServicios);
 function extraerDinero() {
   let dineroAExtraer = parseInt(prompt("Digite el Valor a extraer"), 0);
-
+if ((dineroAExtraer%100)==0){
   if (dineroAExtraer > saldoEnCuenta) {
     alert("Error, su saldo es insuficiente");
   } else if (dineroAExtraer > limiteExtraccion) {
@@ -103,6 +76,9 @@ function extraerDinero() {
   } else {
     alert("Error,Digite un valor correcto");
   }
+}else{
+  alert("Solo puede extraer dinero multiplos de 100");
+}
 }
 
 function depositarDinero() {
@@ -120,11 +96,34 @@ function depositarDinero() {
 }
 
 function cambiarLimiteDeExtraccion() {
-  var nuevoLimite = parseInt(prompt("Ingrese su nuevo límite de estrasion"), 0);
-  limiteExtraccion = nuevoLimite;
-  actualizarLimiteEnPantalla();
-  alert(
-    "Pum pum!! Se ha actualizado tu límite de extracción, nuevo valor " +
-      limiteExtraccion
-  );
+  var nuevoLimite = parseInt(prompt("Ingrese su nuevo límite de extraccion"), 0);
+  if(nuevoLimite<saldoEnCuenta){
+    limiteExtraccion = nuevoLimite;
+    actualizarSaldoExtraccion(limiteExtraccion);
+    actualizarLimiteEnPantalla();
+    alert(
+      "Pum pum!! Se ha actualizado tu límite de extracción, nuevo valor " +
+        limiteExtraccion
+    );
+  }
+ else {
+   alert("El limite de extracción no puede ser mayor que el saldo en cuenta")
+ }
+}
+
+function transferirDinero(){
+  let dineroTransferir = parseInt(prompt("Digite el Valor a transferir"), 0);
+  let numeroCuenta = parseInt(prompt("Digite el numero de cuenta al que le va tranferir"), 0);
+  if (dineroTransferir < saldoEnCuenta){
+    saldoEnCuenta -= dineroTransferir;
+    alert ("Se ha transferido $" + dineroTransferir + " a este numero de cuenta " + numeroCuenta);
+    actualizarSaldoEnPantalla();
+  }
+  else {
+    alert("Su saldo no es suficienta para hacer la tranferencia");
+  }
+}
+
+function actualizarSaldoExtraccion(limite) {
+  document.getElementById("valor").innerHTML = "$ " + limite;
 }
