@@ -18,7 +18,7 @@ function actualizarSaldoEnPantalla() {
   document.getElementById("saldo-cuenta").innerHTML = "$ " + saldoEnCuenta;
 }
 
-function pagarServicios () {
+function pagarServicios() {
   let agua = 500;
   let telefono = 425;
   let luz = 215;
